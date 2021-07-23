@@ -22,10 +22,12 @@ export default {
 </script>
 <style>
 .v-main {
-  background: url("./assets/images/background-mountain.jpg") no-repeat center
-    center;
-  background-size: cover;
+  background: url("./assets/images/background-mountain.jpg") no-repeat, #070918 repeat;
   opacity: 0.82;
+}
+
+.v-main::after {
+  background-color: red repeat; 
 }
   
 </style>

@@ -1,8 +1,8 @@
 <template>
   <v-container style="background-color: transparent; height: 100%">
     <v-row>
-      <v-col md="12">
-        <h1 style="font-size: 55px" class="my-4 mx-15 white--text">Alojamiento</h1>
+      <v-col cols="12">
+        <h1 style="font-size: 55px" class="my-4 ml-15 pl-5 white--text">Alojamiento</h1>
       </v-col>
     </v-row>
     <v-row>
@@ -20,7 +20,7 @@
                 <v-row wrap>
                   <v-col
                     cols="12"
-                    v-for="n in 5"
+                    v-for="n in 35"
                     :key="n"
                   >
                     <AlojamientoCard :alojamiento="alojamiento"/>

@@ -13,8 +13,11 @@
             class="text-h4 mb-2"
             v-text="alojamiento.title"
           ></v-card-title>
-          <v-card-subtitle v-text="alojamiento.location"></v-card-subtitle>
-          <p class="pl-4">Precio por persona: {{alojamiento.precio}}</p>
+          <v-card-subtitle>
+            <v-icon style="font-size: 20px">mdi-map-marker</v-icon>
+            {{ alojamiento.location }}
+          </v-card-subtitle>
+          <p class="pl-4">Precio por persona: {{ alojamiento.precio }}</p>
         </v-col>
         <v-col cols="1">
           <v-row class="mt-1">

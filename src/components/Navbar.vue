@@ -11,7 +11,7 @@
       ></v-app-bar-nav-icon>
       <div class="d-flex align-center">
         <v-btn text @click="goHome" style="position: absolute; left: 35%">
-          <h1 class="white--text mx-1" style="font-size: 2vw">
+          <h1 class="white--text mx-1" style="font-size: 2vw; text-transform: none">
             Claypole al Sur
           </h1>
           <v-icon
