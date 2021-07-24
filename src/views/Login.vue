@@ -89,7 +89,7 @@ export default {
 .container-login {
   margin: 0;
   padding: 0;
-  height: 70%;
+  min-height: 70%;
   max-width: 70%;
   position: absolute;
   top: 15%;
