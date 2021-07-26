@@ -8,78 +8,20 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-container
-        class="mx-15 mt-0 pt-0 px-0 py-0"
-        style="background-color: blue; height: 100%"
-      >
-        <v-row style="margin: 0; padding: 0">
-          <v-card style="height: 100%; width: 100%">
-            <v-img
-              height="200px"
-              src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
-            >
-              <p style="font-size: 50px">Cabañas Pepito</p>
-            </v-img>
-            <v-card-text>
-              <v-row class="my-5">
-                <v-col cols="12" align="center"> </v-col>
-              </v-row>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. A,
-                eius delectus. Aperiam ex quam recusandae repellat facilis est
-                modi omnis? Atque error commodi libero alias eos repellendus
-                eaque quia ipsam!
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. A,
-                eius delectus. Aperiam ex quam recusandae repellat facilis est
-                modi omnis? Atque error commodi libero alias eos repellendus
-                eaque quia ipsam!
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. A,
-                eius delectus. Aperiam ex quam recusandae repellat facilis est
-                modi omnis? Atque error commodi libero alias eos repellendus
-                eaque quia ipsam!
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. A,
-                eius delectus. Aperiam ex quam recusandae repellat facilis est
-                modi omnis? Atque error commodi libero alias eos repellendus
-                eaque quia ipsam!
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. A,
-                eius delectus. Aperiam ex quam recusandae repellat facilis est
-                modi omnis? Atque error commodi libero alias eos repellendus
-                eaque quia ipsam!
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. A,
-                eius delectus. Aperiam ex quam recusandae repellat facilis est
-                modi omnis? Atque error commodi libero alias eos repellendus
-                eaque quia ipsam!
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. A,
-                eius delectus. Aperiam ex quam recusandae repellat facilis est
-                modi omnis? Atque error commodi libero alias eos repellendus
-                eaque quia ipsam!
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. A,
-                eius delectus. Aperiam ex quam recusandae repellat facilis est
-                modi omnis? Atque error commodi libero alias eos repellendus
-                eaque quia ipsam!
-              </p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. A,
-                eius delectus. Aperiam ex quam recusandae repellat facilis est
-                modi omnis? Atque error commodi libero alias eos repellendus
-                eaque quia ipsam!
-              </p>
-            </v-card-text>
-          </v-card>
+      <v-container class="mx-15 mt-0 pt-0 px-10" style="background-color: blue">
+        <v-row>
+          <v-col>
+            <v-row><h1>{{ alojamiento.name }}</h1></v-row>
+            <v-row><h2>{{ alojamiento.location }}</h2></v-row>
+            <v-row><h2>{{ alojamiento.pricePerPerson }}</h2></v-row>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-row v-for="(value, key) in alojamiento.features" :key="key">
+              <p>{{ key }}: <v-icon>mdi-{{icon(value)}}</v-icon></p>
+            </v-row>
+          </v-col>
         </v-row>
       </v-container>
     </v-row>
@@ -89,6 +31,26 @@
 <script>
 export default {
   name: "Alojamiento-detalle",
+  data() {
+    return {
+      alojamiento: {},
+      id: { value: "0", type: String },
+    };
+  },
+  computed: {
+    icon() {
+      return value => value ? "check-outline" : "close-outline";
+    }
+  },
+  created() {
+    this.id = this.$route.params.id;
+    console.log(typeof this.id);
+    //console.log(this.$store.getters.getAlojamientos())
+    console.log(this.$store.getters.getAlojamientoById(this.id));
+    this.alojamiento = this.$store.getters.getAlojamientoById(this.id);
+    console.log("alojamiento: ", this.alojamiento);
+    //this.$store.getters.getAlojamiento(this.$route.params.id);
+  },
 };
 </script>
 
