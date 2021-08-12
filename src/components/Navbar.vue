@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-app-bar app color="purple darken-4" v-if="!isLogin">
-      <!-- <v-icon class="white--text ml-3">
-          mdi-menu
-      </v-icon> -->
+    <v-app-bar app color="purple darken-4" v-if="showNavbar">
       <v-app-bar-nav-icon
         @click="clickDrawer"
         class="white--text"
@@ -11,12 +8,15 @@
       ></v-app-bar-nav-icon>
       <div class="d-flex align-center">
         <v-btn text @click="goHome" style="position: absolute; left: 35%">
-          <h1 class="white--text mx-1" style="font-size: 2vw; text-transform: none">
+          <h1
+            class="navTitle white--text mx-1"
+            style="font-size: 30px; text-transform: none"
+          >
             Claypole al Sur
           </h1>
           <v-icon
             class="white--text mx-1"
-            style="font-size: 2vw; margin-top: 0.3em"
+            style="font-size: 30px; margin-top: 0.3em"
             >mdi-image-filter-hdr</v-icon
           >
         </v-btn>
@@ -24,8 +24,8 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text @click="logOut">
-        <p class="mb-0 white--text" style="font-size: 1vw">Log out</p>
+      <v-btn text @click="logOut" style="margin-top: 8px">
+        <p class="mb-0 white--text" style="font-size: 15px">Log out</p>
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer" color="purple darken-4" temporary>
@@ -44,11 +44,19 @@
           </v-avatar>
         </v-row>
         <v-row justify="center" class="mt-5">
-          <p class="white--text" style="font-size: 20px">Bienvenido, Martín</p>
+          <p class="white--text" style="font-size: 20px">
+            Bienvenido, {{ name }}
+          </p>
         </v-row>
       </v-container>
       <v-list>
-        <v-list-item v-for="item in items" :key="item.title" link :to="item.link">
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+          :to="item.link"
+          @click="ale(item.id)"
+        >
           <v-list-item-icon>
             <v-icon class="white--text">{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -71,18 +79,50 @@ export default {
     return {
       drawer: false,
       items: [
-        { title: "Alojamiento", icon: "mdi-home-group", link: "/alojamiento" },
-        { title: "Transporte", icon: "mdi-airplane",link:"/transporte" },
-        { title: "Excursiones", icon: "mdi-image-filter-hdr",link:"/excursiones" },
-        { title: "Inventario", icon: "mdi-bag-personal",link:"/inventario" },
-        { title: "Playlist", icon: "mdi-playlist-music",link:"/playlist" },
-
+        {
+          id: "1",
+          title: "Alojamiento",
+          icon: "mdi-home-group",
+          link: "/alojamiento",
+          action: "GET_ALOJAMIENTOS",
+          getter: "getAlojamientos",
+        },
+        {
+          id: "2",
+          title: "Transporte",
+          icon: "mdi-airplane",
+          link: "/transporte",
+        },
+        {
+          id: "3",
+          title: "Excursiones",
+          icon: "mdi-image-filter-hdr",
+          link: "/excursiones",
+        },
+        {
+          id: "4",
+          title: "Inventario",
+          icon: "mdi-bag-personal",
+          link: "/inventario",
+        },
+        {
+          id: "5",
+          title: "Playlist",
+          icon: "mdi-playlist-music",
+          link: "/playlist",
+        },
       ],
     };
   },
   computed: {
-    isLogin() {
-      return this.$route.path === "/login";
+    showNavbar() {
+      return !(
+        this.$route.path === "/login" || this.$route.path === "/register"
+      );
+    },
+    name() {
+      const name = this.$store.getters.getActiveUser().fullName.split(" ")[0];
+      return name;
     },
   },
   methods: {
@@ -90,10 +130,15 @@ export default {
       this.$router.push("/");
     },
     logOut() {
+      this.$store.dispatch("SET_SESSION_TOKEN", "");
       this.$router.push("/login");
     },
     clickDrawer() {
       this.drawer = !this.drawer;
+    },
+    ale(e) {
+      const elem = this.items[e - 1];
+      this.$store.dispatch(elem.action);
     },
   },
 };
@@ -103,5 +148,11 @@ export default {
   width: 70px !important;
   height: 70px !important;
   max-width: 70px !important;
+}
+
+@media (max-width: 200px) {
+  .navTitle {
+    display: none;
+  }
 }
 </style>
